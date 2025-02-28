@@ -5,8 +5,17 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        dark: "#2f2f3b",
+        light: "#f8f8f8",
+        primary: "#ef767a",
+        secondary: {
+          normal: "#07beb8",
+          muted: "#20a39e"
+        }
+      }
+    },
   },
   plugins: [],
 }
-
