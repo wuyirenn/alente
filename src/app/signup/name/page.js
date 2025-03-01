@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import OnboardingForm from "@/components/OnboardingForm";
 
-export default function SignupEmail() {
+export default function SignupName() {
     const router = useRouter();
     const [name, setName] = useState("");
     const [error, setError] = useState("");
@@ -27,7 +27,7 @@ export default function SignupEmail() {
 
         try {
             localStorage.setItem("signupName", name);
-            router.push("/auth/signup/username");
+            router.push("/signup/username");
         } catch (error) {
             console.error("Error signing up:", error);
             setError("An error occurred. Please try again.");
@@ -35,7 +35,7 @@ export default function SignupEmail() {
     };
 
     const handleBack = () => {
-        router.push("/auth/signup/email");
+        router.push("/signup/email");
     };
 
     return (
@@ -44,7 +44,7 @@ export default function SignupEmail() {
                 question="Great! What should we call you?"
                 description="Full name, nickname, anything goes!"
                 currentStep={2}
-                totalSteps={5}
+                totalSteps={4}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 onSubmit={handleNext}

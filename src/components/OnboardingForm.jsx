@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function OnboardingForm({
     question,
@@ -15,6 +15,8 @@ export default function OnboardingForm({
     placeholder = "Type your answer here...",
     type = "text",
     rightElement,
+    buttonText = "Next",
+    fields = []
 }) {
     const progressPercentage = (currentStep / totalSteps) * 100;
 
@@ -51,16 +53,31 @@ export default function OnboardingForm({
                 <p className="relative h-2 text-secondary-normal text-sm -left-8 -mb-3">
                     {currentStep}/{totalSteps}
                 </p>
-                <h1 className="text-2xl font-medium text-dark">
-                    {question}
-                </h1>
 
-                { description && (!error) && (
-                    <div className="text-sm text-gray-500">
-                        {description}
-                    </div>
+                { fields.length > 0 ? (
+                    <h1 className="text-2xl font-medium text-dark">
+                        {fields[0].question}
+                    </h1>
+                ) : (
+                    <h1 className="text-2xl font-medium text-dark">
+                        {question}
+                    </h1>
                 )}
 
+                { fields.length > 0 ? (
+                    fields[0].description && !error && (
+                        <div className="text-sm text-gray-500">
+                            {fields[0].description}
+                        </div>
+                    )
+                ) : (
+                    description && !error && (
+                        <div className="text-sm text-gray-500">
+                            {description}
+                        </div>
+                    )
+                )}
+            
                 {error && (
                      <div className="text-primary text-sm">{error}</div>
                 )}
@@ -70,43 +87,61 @@ export default function OnboardingForm({
                     onSubmit(e);
                 }} className="w-full mt-4">
                     <div>
-                        <div className="relative">
-                            <input 
-                                type={type}
-                                value={value}
-                                onChange={onChange}
-                                placeholder={placeholder}
-                                className="w-full text-xl text-dark bg-transparent border-b-2 border-gray-300
-                                pb-1 mb-4 focus:border-dark focus:outline-none transition-colors ease-in placeholder-gray-300"
-                                autoFocus
-                                required
-                            />
-                            {rightElement && (
-                                <div className="absolute right-0 top-1/3">
-                                    {rightElement}
-                                </div>
-                            )}
-                        </div>
-                        
+                        { fields.length > 0 ? (
+                            <div>
+                                {fields.map((field, index) => (
+                                    <div key={index} className="relative">
+                                        <input
+                                            type={field.type || type}
+                                            value={field.value}
+                                            onChange={(e) => field.onChange(e.target.value)}
+                                            placeholder={field.placeholder || placeholder}
+                                            className="w-full text-xl text-dark bg-transparent border-b-2 border-gray-300
+                                            pb-1 mb-4 focus:border-dark focus:outline-none transition-colors ease-in placeholder-gray-300"
+                                            autoFocus={index === 0}
+                                        />
+                                        {field.rightElement && (
+                                            <div className="absolute right-0 top-1/3">
+                                                {field.rightElement}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                        // Single field
+                            <div className="relative gap-2">
+                                <input 
+                                    type={type}
+                                    value={value}
+                                    onChange={onChange}
+                                    placeholder={placeholder}
+                                    className="w-full text-xl text-dark bg-transparent border-b-2 border-gray-300
+                                    pb-1 mb-4 focus:border-dark focus:outline-none transition-colors ease-in placeholder-gray-300"
+                                    autoFocus
+                                />
+                                {rightElement && (
+                                    <div className="absolute right-0 top-1/3">
+                                        {rightElement}
+                                    </div>
+                                )}
+                            </div>     
+                        )}
                         <div className="relative flex gap-2">
                             <button
                                 onClick={onSubmit}
                                 className="py-1 px-6 outline outline-dark bg-transparent text-dark hover:bg-dark hover:text-light transition-colors rounded-sm"
                             >
-                                Next
+                                {buttonText}
                             </button>
                             <p className="m-2 text-sm text-dark">press Enter ↵</p>
                             {onBack && (
-                                <div
-                                    className="absolute m-2 right-0 text-sm text-dark"
-                                >
+                                <div className="absolute m-2 right-0 text-sm text-dark">
                                     ← Shift + Tab to return
                                 </div>
                             )}
                         </div>
                     </div>
-
-                    
                 </form>
             </div>
         </main>

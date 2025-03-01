@@ -47,7 +47,7 @@ export default function SignupEmail() {
             }
 
             localStorage.setItem("signupEmail", email);
-            router.push("/auth/signup/name");
+            router.push("/signup/name");
         } catch (error) {
             console.error("Error signing up:", error);
             setError("An error occurred. Please try again.");
@@ -65,7 +65,7 @@ export default function SignupEmail() {
                 question="What's your email address?"
                 description="This is how you'll log in and stay updated -- promise we won't spam."
                 currentStep={1}
-                totalSteps={5}
+                totalSteps={4}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onSubmit={handleNext}

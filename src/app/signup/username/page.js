@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import OnboardingForm from "@/components/OnboardingForm";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
-export default function SignupEmail() {
+export default function SignupUsername() {
     const supabase = createClientComponentClient();
     const router = useRouter();
     const [username, setUsername] = useState("");
@@ -56,7 +56,7 @@ export default function SignupEmail() {
             }
                     
             localStorage.setItem("signupUsername", sanitizedUsername);
-            router.push("/auth/signup/password");
+            router.push("/signup/password");
         } catch (error) {
             console.error("Error signing up:", error);
             setError("An error occurred. Please try again.");
@@ -64,7 +64,7 @@ export default function SignupEmail() {
     };
 
     const handleBack = () => {
-        router.push("/auth/signup/name");
+        router.push("/signup/name");
     };
 
     return (
@@ -73,7 +73,7 @@ export default function SignupEmail() {
                 question="What would you like your username to be?"
                 description="Choose something special! This will be your signature across the platform."
                 currentStep={3}
-                totalSteps={5}
+                totalSteps={4}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 onSubmit={handleNext}

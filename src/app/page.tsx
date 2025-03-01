@@ -17,7 +17,7 @@ export default function Home() {
           <p className="text-lg mb-8 text-center px-4">
             [text]
           </p>
-          <Link href="/auth" className="outline text-white px-6 py-2 hover:bg-white hover:text-black transition">
+          <Link href="/signup" className="outline text-white px-6 py-2 hover:bg-white hover:text-black transition">
             Sign In
           </Link>
         </div>

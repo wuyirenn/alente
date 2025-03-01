@@ -13,7 +13,10 @@ export default function Signup() {
             if (session) {
                 router.push('/'); // Redirect to home if user is logged in
             } else {
-                router.push('/auth/signup/email'); // Redirect to email signup if not logged in
+                router.push('/signup/email'); // Redirect to email signup if not logged in
+                localStorage.removeItem("signupEmail");
+                localStorage.removeItem("signupName");
+                localStorage.removeItem("signupUsername");
             }
         }
     }, [session, loading, router]);
